@@ -3,7 +3,7 @@ ipeline {
 
     environment {
         AWS_REGION = 'us-east-1'  // Set your AWS region
-        ECR_REPO = '061051222584.dkr.ecr.us-east-1.amazonaws.com/java-spring-boot'  // Set your ECR repository URL
+        ECR_REPO = '061051222584.dkr.ecr.us-east-1.amazonaws.com/jenkins-repo'  // Set your ECR repository URL
         IMAGE_TAG = "${BUILD_NUMBER}"  // Use Jenkins build number as the tag
     }
     stage('Docker Build') {
