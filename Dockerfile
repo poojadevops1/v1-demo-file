@@ -1,8 +1,8 @@
 FROM node:17.9.0 AS base
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
 COPY . .  # Ensure correct permissions on all files
+RUN npm install
 
 FROM node:17.9.0-alpine3.15 AS builder
 WORKDIR /usr/src/app
