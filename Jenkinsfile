@@ -7,6 +7,12 @@ pipeline {
         IMAGE_TAG = "${BUILD_NUMBER}"  // Use Jenkins build number as the tag
     }
     stages{
+        stage('Verify Build Context') {
+    steps {
+        sh 'ls -la'
+    }
+}
+
     stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
