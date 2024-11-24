@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 script {
-                    dockerImage = docker.build("${env.ECR_REPO}:${env.IMAGE_TAG}", ".")
+                    dockerImage = docker.build("${env.ECR_REPO}:${env.IMAGE_TAG}")
                 }
             }
         }
