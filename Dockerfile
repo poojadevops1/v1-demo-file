@@ -1,18 +1,21 @@
-FROM node:17.9.0 AS base
+# Base Stage: Install dependencies
+FROM node:18.17.1 AS base
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
-COPY . .  # Copy all application files to /usr/src/app
 
-FROM base as builder
-WORKDIR /usr/src/app
+# Build Stage: Compile application
+FROM base AS builder
+COPY . .  # Copy application source code
 RUN npm run build
 
-FROM node:17.9.0-alpine3.15
+# Production Stage: Final lightweight image
+FROM node:18.17.1-alpine3.17
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install --only=production
-COPY --from=builder /usr/src/app/dist ./
+COPY --from=builder /usr/src/app/dist ./dist  # Copy built application
+COPY server.js ./  # Ensure server.js is included in the final image
 
 EXPOSE 8080
-ENTRYPOINT ["node", "/server.js"]
+ENTRYPOINT ["node", "./server.js"]
