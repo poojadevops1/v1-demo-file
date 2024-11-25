@@ -4,10 +4,15 @@ COPY package*.json ./
 RUN npm install
 COPY . .  # Copy all application files to /usr/src/app
 
-FROM node:17.9.0-alpine3.15 AS builder
+FROM base as builder
 WORKDIR /usr/src/app
-COPY --from=base /usr/src/app .  # Copy everything from "base" stage's /usr/src/app
+RUN npm run build
+
+FROM node:17.9.0-alpine3.15
+WORKDIR /usr/src/app
+COPY package*.json ./
 RUN npm install --only=production
+COPY --from=builder /usr/src/app/dist ./
 
 EXPOSE 8080
-ENTRYPOINT ["node", "/usr/src/app/server.js"]
+ENTRYPOINT ["node", "/server.js"]
