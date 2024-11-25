@@ -13,6 +13,12 @@ pipeline {
                 sh 'ls -la'
             }
         }
+        stage('Cleanup') {
+    steps {
+        sh 'docker system prune -f'
+    }
+}
+
 
         stage('Check Docker Access') {
             steps {
